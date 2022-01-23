@@ -1,0 +1,15 @@
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\bin\Release\net5.0-windows\Line2D.deps.json
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\bin\Release\net5.0-windows\Line2D.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\bin\Release\net5.0-windows\ref\Line2D.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\bin\Release\net5.0-windows\Line2D.pdb
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\bin\Release\net5.0-windows\Contract.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\bin\Release\net5.0-windows\Contract.pdb
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.csproj.AssemblyReference.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.GeneratedMSBuildEditorConfig.editorconfig
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.AssemblyInfoInputs.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.AssemblyInfo.cs
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.csproj.CoreCompileInputs.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.csproj.CopyComplete
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\ref\Line2D.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Release\net5.0-windows\Line2D.pdb

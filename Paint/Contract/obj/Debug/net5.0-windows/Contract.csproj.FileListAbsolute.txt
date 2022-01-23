@@ -1,0 +1,12 @@
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\bin\Debug\net5.0-windows\Contract.deps.json
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\bin\Debug\net5.0-windows\Contract.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\bin\Debug\net5.0-windows\ref\Contract.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\bin\Debug\net5.0-windows\Contract.pdb
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\Contract.csproj.AssemblyReference.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\Contract.GeneratedMSBuildEditorConfig.editorconfig
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\Contract.AssemblyInfoInputs.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\Contract.AssemblyInfo.cs
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\Contract.csproj.CoreCompileInputs.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\Contract.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\ref\Contract.dll
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Debug\net5.0-windows\Contract.pdb

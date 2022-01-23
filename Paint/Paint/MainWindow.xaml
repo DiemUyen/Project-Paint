@@ -1,0 +1,83 @@
+﻿<Fluent:RibbonWindow x:Class="Paint.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Paint"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+
+    <DockPanel LastChildFill="True">
+        <Fluent:Ribbon DockPanel.Dock="Top">
+            <Fluent:Ribbon.Menu>
+                <Fluent:Backstage Header="File">
+                    <Fluent:BackstageTabControl>
+                        <Fluent:BackstageTabItem Header="New"/>
+                        <Fluent:BackstageTabItem Header="Open"/>
+                        <Fluent:BackstageTabItem Header="Save"/>
+                    </Fluent:BackstageTabControl>
+                </Fluent:Backstage>
+            </Fluent:Ribbon.Menu>
+
+            <Fluent:RibbonTabItem Header="Home">
+                <Fluent:RibbonGroupBox Header="Clipboard">
+                    <Fluent:Button Name="BtnPaste" Icon="/Icons/paste.png" Margin="0,0,5,0" Click="BtnPaste_Click">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/paste.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+
+                    <Fluent:Button Name="BtnCut" Icon="/Icons/cut.png" Margin="0,0,0,15" Click="BtnCut_Click" SizeDefinition="Small">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/cut.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+
+                    <Fluent:Button Name="BtnCopy" Icon="/Icons/copy.png" Click="BtnCopy_Click" SizeDefinition="Small">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/copy.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Image">
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Tools">
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Shapes">
+                    <ListView Name="ShapeList" Width="200">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Fluent:Button Name="BtnShape" Icon="{Binding Icon}" Tag="{Binding Name}" Click="BtnShape_Click" SizeDefinition="Small">
+                                    <Fluent:Button.LargeIcon>
+                                        <Image Source="{Binding Icon}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    </Fluent:Button.LargeIcon>
+                                </Fluent:Button>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Colors">
+                    
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+        </Fluent:Ribbon>
+        
+        <Grid>
+            <Canvas Name="canvas" Background="White"/>
+            <Border Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseUp="Border_MouseUp"/>
+        </Grid>
+    </DockPanel>
+</Fluent:RibbonWindow>

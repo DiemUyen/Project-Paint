@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "+W+oOlN867ri3NRtn9DYhbjwmqUZyH7nw6eO9VmoAfIAvNNTlYswJSzkqbqSmndScl53d4wEysLsO9drc60AtQ==",
+  "success": true,
+  "projectFilePath": "D:\\University's Lifes\\[HK1] 2021 - 2022\\LẬP TRÌNH WINDOWS\\PROJECT 2\\19120426\\Paint\\Paint\\Paint.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\admin\\.nuget\\packages\\controlzex\\5.0.1\\controlzex.5.0.1.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\fluent.ribbon\\9.0.1\\fluent.ribbon.9.0.1.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.31\\microsoft.xaml.behaviors.wpf.1.1.31.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\system.text.json\\5.0.1\\system.text.json.5.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

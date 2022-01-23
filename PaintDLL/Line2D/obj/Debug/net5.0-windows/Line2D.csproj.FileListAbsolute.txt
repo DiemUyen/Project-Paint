@@ -1,0 +1,5 @@
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Debug\net5.0-windows\Line2D.csproj.AssemblyReference.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Debug\net5.0-windows\Line2D.GeneratedMSBuildEditorConfig.editorconfig
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Debug\net5.0-windows\Line2D.AssemblyInfoInputs.cache
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Debug\net5.0-windows\Line2D.AssemblyInfo.cs
+D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\PaintDLL\Line2D\obj\Debug\net5.0-windows\Line2D.csproj.CoreCompileInputs.cache

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Line2D", "Line2D\Line2D.csproj", "{E76B4C2F-039C-4642-A33D-3A648B268036}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellipse2D", "Ellipse2D\Ellipse2D.csproj", "{9BE5F3DB-9EC7-424E-BB8C-2624668BB79E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rectangle2D", "Rectangle2D\Rectangle2D.csproj", "{4B7C8562-6B87-418F-BC31-F1A64F950C51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E76B4C2F-039C-4642-A33D-3A648B268036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E76B4C2F-039C-4642-A33D-3A648B268036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E76B4C2F-039C-4642-A33D-3A648B268036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E76B4C2F-039C-4642-A33D-3A648B268036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE5F3DB-9EC7-424E-BB8C-2624668BB79E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE5F3DB-9EC7-424E-BB8C-2624668BB79E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE5F3DB-9EC7-424E-BB8C-2624668BB79E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE5F3DB-9EC7-424E-BB8C-2624668BB79E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7C8562-6B87-418F-BC31-F1A64F950C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7C8562-6B87-418F-BC31-F1A64F950C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7C8562-6B87-418F-BC31-F1A64F950C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7C8562-6B87-418F-BC31-F1A64F950C51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD25A732-3AFA-4A23-834F-D03082EA68E4}
+	EndGlobalSection
+EndGlobal
