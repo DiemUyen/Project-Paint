@@ -10,3 +10,15 @@ D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\
 D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Release\net5.0-windows\Contract.dll
 D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Release\net5.0-windows\ref\Contract.dll
 D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Contract\obj\Release\net5.0-windows\Contract.pdb
+D:\GitHub\Project-Paint\Paint\Contract\bin\Release\net5.0-windows\Contract.deps.json
+D:\GitHub\Project-Paint\Paint\Contract\bin\Release\net5.0-windows\Contract.dll
+D:\GitHub\Project-Paint\Paint\Contract\bin\Release\net5.0-windows\ref\Contract.dll
+D:\GitHub\Project-Paint\Paint\Contract\bin\Release\net5.0-windows\Contract.pdb
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\Contract.csproj.AssemblyReference.cache
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\Contract.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\Contract.AssemblyInfoInputs.cache
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\Contract.AssemblyInfo.cs
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\Contract.csproj.CoreCompileInputs.cache
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\Contract.dll
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\ref\Contract.dll
+D:\GitHub\Project-Paint\Paint\Contract\obj\Release\net5.0-windows\Contract.pdb

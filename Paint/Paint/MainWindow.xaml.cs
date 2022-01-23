@@ -39,6 +39,7 @@ namespace Paint
         string _selectedShapeName;
         string projectPath = "";
         bool isSaved = true;
+        double originalWidth, originalHeight;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -71,13 +72,26 @@ namespace Paint
             _selectedShapeName = _prototypes.First().Value.Name;
             _preview = _prototypes[_selectedShapeName].Clone();
             DataContext = this;
+
+            originalWidth = ActualWidth;
+            originalHeight = ActualHeight;
+
+            canvas.Width = originalWidth;
+            canvas.Height = originalHeight;
+            border.Width = canvas.Width;
+            border.Height = canvas.Height;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            Point position = e.GetPosition(canvas);
+            if (position.X > border.Width || position.Y > border.Height)
+            {
+                return;
+            }
+
             isSaved = false;
             isDrawing = true;
-            Point position = e.GetPosition(canvas);
             _preview.HandleStart(position.X, position.Y);
         }
 
@@ -104,22 +118,25 @@ namespace Paint
 
         private void Border_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            isDrawing = false;
-            // Add preview shape into list drawn shapes
-            Point position = e.GetPosition(canvas);
-            _preview.HandleEnd(position.X, position.Y);
-            _shapes.Add(_preview);
-
-            // Create the next shape
-            _preview = _prototypes[_selectedShapeName].Clone();
-
-            // Delete previous drawn shapes
-            canvas.Children.Clear();
-
-            // Draw shapes again
-            foreach (var shape in _shapes)
+            if (isDrawing)
             {
-                canvas.Children.Add(shape.Draw());
+                isDrawing = false;
+                // Add preview shape into list drawn shapes
+                Point position = e.GetPosition(canvas);
+                _preview.HandleEnd(position.X, position.Y);
+                _shapes.Add(_preview);
+
+                // Create the next shape
+                _preview = _prototypes[_selectedShapeName].Clone();
+
+                // Delete previous drawn shapes
+                canvas.Children.Clear();
+
+                // Draw shapes again
+                foreach (var shape in _shapes)
+                {
+                    canvas.Children.Add(shape.Draw());
+                }
             }
         }
 
@@ -157,24 +174,25 @@ namespace Paint
         {
             if (isSaved)
             {
-                canvas.Children.Clear();
-                _shapes.Clear();
+                ClearCanvas();
             }
             else
             {
-                var result = MessageBox.Show("Do you want to save changes to ?", "Paint", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                var result = MessageBox.Show("Do you want to save changes to " + TitleName + "?", "Paint", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
                         bool saveResult = SaveCanvasToImage();
                         if (saveResult)
+                        {
                             MessageBox.Show("Save successfully.");
+                            ClearCanvas();
+                        }
                         else
                             MessageBox.Show("Save failed.");
                         break;
                     case MessageBoxResult.No:
-                        canvas.Children.Clear();
-                        _shapes.Clear();
+                        ClearCanvas();
                         break;
                     case MessageBoxResult.Cancel:
                         break;
@@ -189,7 +207,7 @@ namespace Paint
                 // Render canvas to bitmap
                 int canvasWidth = (int)canvas.ActualWidth;
                 int canvasHeight = (int)canvas.ActualHeight;
-                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(canvasWidth, canvasHeight, 100d, 100d, PixelFormats.Pbgra32);
+                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(canvasWidth, canvasHeight, 96d, 96d, PixelFormats.Pbgra32);
                 canvas.Measure(new Size(canvasWidth, canvasHeight));
                 canvas.Arrange(new Rect(new Size(canvasWidth, canvasHeight)));
                 renderTargetBitmap.Render(canvas);
@@ -204,6 +222,8 @@ namespace Paint
                 dialog.Filter = "Image files|*.png";
                 if (dialog.ShowDialog() == true)
                     imageFilename = dialog.FileName;
+                else
+                    throw new Exception();
 
                 // Save image
                 isSaved = true;
@@ -213,9 +233,7 @@ namespace Paint
                 }
 
                 // Update title
-                int lastBackflashPosition = imageFilename.LastIndexOf("\\");
-                string name = imageFilename.Substring(lastBackflashPosition + 1);
-                TitleName = name.Substring(0, name.Length - 4);
+                UpdateTitle(imageFilename);
 
                 return true;
             }
@@ -224,6 +242,55 @@ namespace Paint
                 isSaved = false;
                 return false;
             }
+        }
+
+        private void BtnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All image files|*.png;*jpeg;*jpg;*bmp|PNG|*png|JPEG|*jpg;*jpeg|BMP|*.bmp";
+            dialog.Multiselect = false;
+            if (dialog.ShowDialog() == true)
+            {
+                string imageFilename = dialog.FileName;
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(imageFilename, UriKind.RelativeOrAbsolute);
+                bitmap.EndInit();
+
+                ImageBrush imageBrush = new ImageBrush();
+                imageBrush.ImageSource = bitmap;
+                canvas.Width = bitmap.Width;
+                canvas.Height = bitmap.Height;
+                border.Width = bitmap.Width;
+                border.Height = bitmap.Height;
+                canvas.Background = imageBrush;
+                UpdateTitle(imageFilename);
+            }
+        }
+
+        private void UpdateTitle(string imageFilename)
+        {
+            int lastBackflashPosition = imageFilename.LastIndexOf("\\");
+            string name = imageFilename.Substring(lastBackflashPosition + 1);
+            int lastDotPosition = name.LastIndexOf(".");
+            TitleName = name.Substring(0, lastDotPosition);
+        }
+
+        private void ClearCanvas()
+        {
+            // Clear all objects in canvas
+            canvas.Children.Clear();
+            _shapes.Clear();
+            TitleName = "Untitled";
+
+            // Clear background
+            canvas.Background = new SolidColorBrush(Colors.White);
+
+            // Set the original canvas and border
+            canvas.Width = originalWidth;
+            canvas.Height = originalHeight;
+            border.Width = canvas.Width;
+            border.Height = canvas.Height;
         }
     }
 }

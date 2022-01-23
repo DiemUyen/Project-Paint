@@ -14,7 +14,7 @@
                 <Fluent:Backstage Header="File">
                     <Fluent:BackstageTabControl>
                         <Fluent:Button Header="New" Name="BtnNew" Click="BtnNew_Click"/>
-                        <Fluent:BackstageTabItem Header="Open"/>
+                        <Fluent:Button Header="Open" Name="BtnOpen" Click="BtnOpen_Click"/>
                         <Fluent:Button Header="Save" Name="BtnSave" Click="BtnSave_Click"/>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>
@@ -42,11 +42,11 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Image">
-                    
+
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Tools">
-                    
+
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Shapes">
@@ -56,7 +56,7 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
-                        
+
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Fluent:Button Name="BtnShape" Icon="{Binding Icon}" Tag="{Binding Name}" Click="BtnShape_Click" SizeDefinition="Small">
@@ -70,14 +70,15 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Colors">
-                    
+
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
-        
-        <Grid>
-            <Canvas Name="canvas" Background="White"/>
-            <Border Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseUp="Border_MouseUp"/>
+
+        <Grid Background="LightGray">
+            <Canvas Name="canvas" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Border Name="border" Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseUp="Border_MouseUp"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1" BorderBrush="White"/>
         </Grid>
     </DockPanel>
 </Fluent:RibbonWindow>
