@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Fluent;
+using Microsoft.Win32;
 
 namespace Paint
 {
@@ -35,10 +36,13 @@ namespace Paint
         List<IShape> _shapes = new List<IShape>();
         IShape _preview;
         string _selectedShapeName;
+        string projectPath = "";
+        bool isSaved = true;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string exeFolderPath = AppDomain.CurrentDomain.BaseDirectory + "\\DLL";
+            projectPath = AppDomain.CurrentDomain.BaseDirectory;
+            string exeFolderPath = projectPath + "\\DLL";
             var dllFiles = new DirectoryInfo(exeFolderPath).GetFiles("*.dll");
 
             foreach (var dll in dllFiles)
@@ -64,6 +68,7 @@ namespace Paint
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            isSaved = false;
             isDrawing = true;
             Point position = e.GetPosition(canvas);
             _preview.HandleStart(position.X, position.Y);
@@ -130,6 +135,83 @@ namespace Paint
         {
             _selectedShapeName = (sender as Fluent.Button).Tag as string;
             _preview = _prototypes[_selectedShapeName].Clone();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            bool result = SaveCanvasToImage();
+            if (result)
+                MessageBox.Show("Save successfully.");
+            else
+                MessageBox.Show("Save failed.");
+        }
+
+        private void BtnNew_Click(object sender, RoutedEventArgs e)
+        {
+            if (isSaved)
+            {
+                canvas.Children.Clear();
+                _shapes.Clear();
+            }
+            else
+            {
+                var result = MessageBox.Show("Do you want to save changes to ?", "Paint", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        bool saveResult = SaveCanvasToImage();
+                        if (saveResult)
+                            MessageBox.Show("Save successfully.");
+                        else
+                            MessageBox.Show("Save failed.");
+                        break;
+                    case MessageBoxResult.No:
+                        canvas.Children.Clear();
+                        _shapes.Clear();
+                        break;
+                    case MessageBoxResult.Cancel:
+                        break;
+                }
+            }
+        }
+
+        private bool SaveCanvasToImage()
+        {
+            try
+            {
+                // Render canvas to bitmap
+                int canvasWidth = (int)canvas.ActualWidth;
+                int canvasHeight = (int)canvas.ActualHeight;
+                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(canvasWidth, canvasHeight, 100d, 100d, PixelFormats.Pbgra32);
+                canvas.Measure(new Size(canvasWidth, canvasHeight));
+                canvas.Arrange(new Rect(new Size(canvasWidth, canvasHeight)));
+                renderTargetBitmap.Render(canvas);
+
+                // Transfer bitmap to png 
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+
+                // Choose path to save image
+                string imageFilename = "";
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "Image files|*.png";
+                if (dialog.ShowDialog() == true)
+                    imageFilename = dialog.FileName;
+
+                // Save image
+                isSaved = true;
+                using (FileStream stream = new FileStream(imageFilename, FileMode.Create))
+                {
+                    encoder.Save(stream);
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                isSaved = false;
+                return false;
+            }
         }
     }
 }

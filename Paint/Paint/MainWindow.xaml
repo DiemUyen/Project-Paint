@@ -13,9 +13,9 @@
             <Fluent:Ribbon.Menu>
                 <Fluent:Backstage Header="File">
                     <Fluent:BackstageTabControl>
-                        <Fluent:BackstageTabItem Header="New"/>
+                        <Fluent:Button Header="New" Name="BtnNew" Click="BtnNew_Click"/>
                         <Fluent:BackstageTabItem Header="Open"/>
-                        <Fluent:BackstageTabItem Header="Save"/>
+                        <Fluent:Button Header="Save" Name="BtnSave" Click="BtnSave_Click"/>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>
             </Fluent:Ribbon.Menu>

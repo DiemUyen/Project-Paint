@@ -28,3 +28,33 @@ D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\
 D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Paint\obj\Release\net5.0-windows\ref\Paint.dll
 D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Paint\obj\Release\net5.0-windows\Paint.pdb
 D:\University's Lifes\[HK1] 2021 - 2022\LẬP TRÌNH WINDOWS\PROJECT 2\19120426\Paint\Paint\obj\Release\net5.0-windows\Paint.genruntimeconfig.cache
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Paint.exe
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Paint.deps.json
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Paint.runtimeconfig.json
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Paint.runtimeconfig.dev.json
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Paint.dll
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\ref\Paint.dll
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Paint.pdb
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\ControlzEx.dll
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Fluent.dll
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Microsoft.Xaml.Behaviors.dll
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\System.Text.Json.dll
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Contract.dll
+D:\GitHub\Project-Paint\Paint\Paint\bin\Release\net5.0-windows\Contract.pdb
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.csproj.AssemblyReference.cache
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\MainWindow.g.cs
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\App.g.cs
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint_MarkupCompile.cache
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint_MarkupCompile.lref
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\App.baml
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\MainWindow.baml
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.g.resources
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.AssemblyInfoInputs.cache
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.AssemblyInfo.cs
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.csproj.CoreCompileInputs.cache
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.csproj.CopyComplete
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.dll
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\ref\Paint.dll
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.pdb
+D:\GitHub\Project-Paint\Paint\Paint\obj\Release\net5.0-windows\Paint.genruntimeconfig.cache
