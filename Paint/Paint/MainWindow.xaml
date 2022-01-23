@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Paint"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="{Binding Path=TitleName}" Height="450" Width="800" Loaded="Window_Loaded">
 
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top">

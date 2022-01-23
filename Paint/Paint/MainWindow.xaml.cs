@@ -17,13 +17,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Fluent;
 using Microsoft.Win32;
+using System.ComponentModel;
 
 namespace Paint
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : RibbonWindow
+    public partial class MainWindow : RibbonWindow, INotifyPropertyChanged
     {
         public MainWindow()
         {
@@ -38,6 +39,10 @@ namespace Paint
         string _selectedShapeName;
         string projectPath = "";
         bool isSaved = true;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string TitleName { get; set; }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -61,9 +66,11 @@ namespace Paint
                 }
             }
 
+            TitleName = "Untitled";
             ShapeList.ItemsSource = _shapeButtons;
             _selectedShapeName = _prototypes.First().Value.Name;
             _preview = _prototypes[_selectedShapeName].Clone();
+            DataContext = this;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -204,6 +211,11 @@ namespace Paint
                 {
                     encoder.Save(stream);
                 }
+
+                // Update title
+                int lastBackflashPosition = imageFilename.LastIndexOf("\\");
+                string name = imageFilename.Substring(lastBackflashPosition + 1);
+                TitleName = name.Substring(0, name.Length - 4);
 
                 return true;
             }

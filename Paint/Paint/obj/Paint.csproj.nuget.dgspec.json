@@ -104,6 +104,10 @@
             "Fluent.Ribbon": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "PropertyChanged.Fody": {
+              "target": "Package",
+              "version": "[3.4.0, )"
             }
           },
           "imports": [

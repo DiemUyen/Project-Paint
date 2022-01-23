@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fluent.Ribbon" Version="9.0.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 
   <ItemGroup>
