@@ -75,10 +75,12 @@
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
 
-        <Grid Background="LightGray">
-            <Canvas Name="canvas" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Border Name="border" Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseUp="Border_MouseUp"
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+            <Grid Background="LightGray">
+                <Canvas Name="canvas" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Border Name="border" Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseUp="Border_MouseUp"
                     HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1" BorderBrush="White"/>
-        </Grid>
+            </Grid>
+        </ScrollViewer>
     </DockPanel>
 </Fluent:RibbonWindow>
