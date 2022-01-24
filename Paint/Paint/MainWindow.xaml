@@ -22,19 +22,19 @@
 
             <Fluent:RibbonTabItem Header="Home">
                 <Fluent:RibbonGroupBox Header="Clipboard">
-                    <Fluent:Button Name="BtnPaste" Icon="/Icons/paste.png" Margin="0,0,5,0" Click="BtnPaste_Click">
+                    <Fluent:Button Name="BtnPaste" Icon="/Icons/paste.png" Margin="0,5,5,0" Click="BtnPaste_Click">
                         <Fluent:Button.LargeIcon>
                             <Image Source="/Icons/paste.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
 
-                    <Fluent:Button Name="BtnCut" Icon="/Icons/cut.png" Margin="0,0,0,15" Click="BtnCut_Click" SizeDefinition="Small">
+                    <Fluent:Button Name="BtnCut" Icon="/Icons/cut.png" Margin="0,5,0,10" Height="30" Click="BtnCut_Click" SizeDefinition="Small">
                         <Fluent:Button.LargeIcon>
                             <Image Source="/Icons/cut.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
 
-                    <Fluent:Button Name="BtnCopy" Icon="/Icons/copy.png" Click="BtnCopy_Click" SizeDefinition="Small">
+                    <Fluent:Button Name="BtnCopy" Icon="/Icons/copy.png" Height="30" Click="BtnCopy_Click" SizeDefinition="Small">
                         <Fluent:Button.LargeIcon>
                             <Image Source="/Icons/copy.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
@@ -47,6 +47,16 @@
 
                 <Fluent:RibbonGroupBox Header="Tools">
 
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Brush">
+                    <Fluent:DropDownButton Name="BtnSize" Header="Size" Icon="/Icons/line-width.png">
+                        
+                    </Fluent:DropDownButton>
+
+                    <Fluent:DropDownButton Name="BtnStyle" Header="Style" Icon="/Icons/line-style.png">
+                        
+                    </Fluent:DropDownButton>
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Shapes">
@@ -70,12 +80,49 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Colors">
+                    <Fluent:Button Name="BtnBrushColor" SizeDefinition="Small" Margin="5, 5, 5, 15" Background="Black"/>
+                    <Fluent:Button Name="BtnEraserColor" SizeDefinition="Small" Margin="5, 5, 5, 0" Background="White"/>
 
+                    <ListView Name="ColorList" Width="305" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="White">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Button Name="BtnColor" Background="{Binding Path=HexColor}" ToolTip="{Binding ColorName}" Width="20" Height="20" Click="BtnColor_Click"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <Fluent:Button Name="BtnColorPicker" Icon="/Icons/color-wheel.png" Click="BtnColorPicker_Click">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/color-wheel.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="View">
+                <Fluent:RibbonGroupBox Header="Zoom">
+                    <Fluent:Button Name="BtnZoomIn" Header="Zoom in" Icon="/Icons/zoom-in.png" Click="BtnZoomIn_Click">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/zoom-in.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+
+                    <Fluent:Button Name="BtnZoomOut" Header="Zoom out" Icon="/Icons/zoom-out.png" Click="BtnZoomOut_Click">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/zoom-out.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+        <ScrollViewer Name="ScrollBar" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Background="LightGray">
                 <Canvas Name="canvas" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Border Name="border" Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseUp="Border_MouseUp"

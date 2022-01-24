@@ -40,6 +40,9 @@ namespace Paint
         string projectPath = "";
         bool isSaved = true;
         double originalWidth, originalHeight;
+        List<CustomColor> _colors = new List<CustomColor>();
+        ScaleTransform scaleTransform = new ScaleTransform();
+        int zoomOutTimes, zoomInTimes;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -47,6 +50,7 @@ namespace Paint
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Load all graphic objects from external DLL files
             projectPath = AppDomain.CurrentDomain.BaseDirectory;
             string exeFolderPath = projectPath + "\\DLL";
             var dllFiles = new DirectoryInfo(exeFolderPath).GetFiles("*.dll");
@@ -67,12 +71,16 @@ namespace Paint
                 }
             }
 
+            // Create orginal data
             TitleName = "Untitled";
             ShapeList.ItemsSource = _shapeButtons;
             _selectedShapeName = _prototypes.First().Value.Name;
             _preview = _prototypes[_selectedShapeName].Clone();
             DataContext = this;
+            zoomInTimes = 0;
+            zoomOutTimes = 0;
 
+            // Create canvas
             originalWidth = ActualWidth;
             originalHeight = ActualHeight;
 
@@ -80,6 +88,33 @@ namespace Paint
             canvas.Height = originalHeight;
             border.Width = canvas.Width;
             border.Height = canvas.Height;
+
+            canvas.LayoutTransform = scaleTransform;
+            border.LayoutTransform = scaleTransform;
+
+            // Create color list
+            _colors.Add(new CustomColor() { ColorName = "Black", HexColor = new SolidColorBrush(Colors.Black) });
+            _colors.Add(new CustomColor() { ColorName = "Gray", HexColor = new SolidColorBrush(Colors.Gray) });
+            _colors.Add(new CustomColor() { ColorName = "Dark Red", HexColor = new SolidColorBrush(Colors.DarkRed) });
+            _colors.Add(new CustomColor() { ColorName = "Red", HexColor = new SolidColorBrush(Colors.Red) });
+            _colors.Add(new CustomColor() { ColorName = "Orange", HexColor = new SolidColorBrush(Colors.Orange) });
+            _colors.Add(new CustomColor() { ColorName = "Yellow", HexColor = new SolidColorBrush(Colors.Yellow) });
+            _colors.Add(new CustomColor() { ColorName = "Green", HexColor = new SolidColorBrush(Colors.Green) });
+            _colors.Add(new CustomColor() { ColorName = "Turquoise", HexColor = new SolidColorBrush(Colors.Turquoise) });
+            _colors.Add(new CustomColor() { ColorName = "Indigo", HexColor = new SolidColorBrush(Colors.Indigo) });
+            _colors.Add(new CustomColor() { ColorName = "Purple", HexColor = new SolidColorBrush(Colors.Purple) });
+            _colors.Add(new CustomColor() { ColorName = "White", HexColor = new SolidColorBrush(Colors.White) });
+            _colors.Add(new CustomColor() { ColorName = "Light Gray", HexColor = new SolidColorBrush(Colors.LightGray) });
+            _colors.Add(new CustomColor() { ColorName = "Brown", HexColor = new SolidColorBrush(Colors.Brown) });
+            _colors.Add(new CustomColor() { ColorName = "Light Pink", HexColor = new SolidColorBrush(Colors.LightPink) });
+            _colors.Add(new CustomColor() { ColorName = "Gold", HexColor = new SolidColorBrush(Colors.Gold) });
+            _colors.Add(new CustomColor() { ColorName = "Light Yellow", HexColor = new SolidColorBrush(Colors.LightYellow) });
+            _colors.Add(new CustomColor() { ColorName = "Lime", HexColor = new SolidColorBrush(Colors.Lime) });
+            _colors.Add(new CustomColor() { ColorName = "Medium Turquoise", HexColor = new SolidColorBrush(Colors.MediumTurquoise) });
+            _colors.Add(new CustomColor() { ColorName = "Light Slate Gray", HexColor = new SolidColorBrush(Colors.LightSlateGray) });
+            _colors.Add(new CustomColor() { ColorName = "Lavender", HexColor = new SolidColorBrush(Colors.Lavender) });
+
+            ColorList.ItemsSource = _colors;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -204,6 +239,9 @@ namespace Paint
         {
             try
             {
+                // Set the original size of canvas
+                SetOriginalCanvasToSave();
+
                 // Render canvas to bitmap
                 int canvasWidth = (int)canvas.ActualWidth;
                 int canvasHeight = (int)canvas.ActualHeight;
@@ -211,7 +249,8 @@ namespace Paint
                 canvas.Measure(new Size(canvasWidth, canvasHeight));
                 canvas.Arrange(new Rect(new Size(canvasWidth, canvasHeight)));
                 renderTargetBitmap.Render(canvas);
-
+                ReturnZoomCanvas();
+                
                 // Transfer bitmap to png 
                 PngBitmapEncoder encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
@@ -276,6 +315,43 @@ namespace Paint
             TitleName = name.Substring(0, lastDotPosition);
         }
 
+        private void BtnColorPicker_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog colorPicker = new System.Windows.Forms.ColorDialog();
+            if (colorPicker.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                var color = colorPicker.Color;
+                BtnBrushColor.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+            }
+        }
+
+        private void BtnColor_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (zoomInTimes < 3)
+            {
+                scaleTransform.ScaleX *= 2;
+                scaleTransform.ScaleY *= 2;
+                zoomInTimes++;
+                zoomOutTimes--;
+            }
+        }
+
+        private void BtnZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (zoomOutTimes < 3)
+            {
+                scaleTransform.ScaleX /= 2;
+                scaleTransform.ScaleY /= 2;
+                zoomOutTimes++;
+                zoomInTimes--;
+            }
+        }
+
         private void ClearCanvas()
         {
             // Clear all objects in canvas
@@ -291,6 +367,46 @@ namespace Paint
             canvas.Height = originalHeight;
             border.Width = canvas.Width;
             border.Height = canvas.Height;
+        }
+
+        private void SetOriginalCanvasToSave()
+        {
+            int zoom = zoomInTimes;
+            while (zoom != 0)
+            {
+                if (zoom > 0)
+                {
+                    scaleTransform.ScaleX /= 2;
+                    scaleTransform.ScaleY /= 2;
+                    zoom--;
+                }
+                else
+                {
+                    scaleTransform.ScaleX *= 2;
+                    scaleTransform.ScaleY *= 2;
+                    zoom++;
+                }
+            }
+        }
+
+        private void ReturnZoomCanvas()
+        {
+            int zoom = zoomInTimes;
+            while (zoom != 0)
+            {
+                if (zoom > 0)
+                {
+                    scaleTransform.ScaleX *= 2;
+                    scaleTransform.ScaleY *= 2;
+                    zoom--;
+                }
+                else
+                {
+                    scaleTransform.ScaleX /= 2;
+                    scaleTransform.ScaleY /= 2;
+                    zoom++;
+                }
+            }
         }
     }
 }

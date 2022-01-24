@@ -7,14 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\color-wheel.png" />
     <None Remove="Icons\copy.png" />
     <None Remove="Icons\cut.png" />
     <None Remove="Icons\ellipse.png" />
+    <None Remove="Icons\line-style.png" />
+    <None Remove="Icons\line-width.png" />
     <None Remove="Icons\line.png" />
     <None Remove="Icons\paste.png" />
     <None Remove="Icons\rectangle.png" />
     <None Remove="Icons\redo.png" />
     <None Remove="Icons\undo.png" />
+    <None Remove="Icons\zoom-in.png" />
+    <None Remove="Icons\zoom-out.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,14 +32,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icons\color-wheel.png" />
     <Resource Include="Icons\copy.png" />
     <Resource Include="Icons\cut.png" />
     <Resource Include="Icons\ellipse.png" />
+    <Resource Include="Icons\line-style.png" />
+    <Resource Include="Icons\line-width.png" />
     <Resource Include="Icons\line.png" />
     <Resource Include="Icons\paste.png" />
     <Resource Include="Icons\rectangle.png" />
     <Resource Include="Icons\redo.png" />
     <Resource Include="Icons\undo.png" />
+    <Resource Include="Icons\zoom-in.png" />
+    <Resource Include="Icons\zoom-out.png" />
   </ItemGroup>
 
 </Project>
