@@ -43,6 +43,7 @@ namespace Paint
         List<CustomColor> _colors = new List<CustomColor>();
         ScaleTransform scaleTransform = new ScaleTransform();
         int zoomOutTimes, zoomInTimes;
+        List<IShape> _redoShapes = new List<IShape>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -156,6 +157,10 @@ namespace Paint
             if (isDrawing)
             {
                 isDrawing = false;
+                BtnUndo.IsEnabled = true;
+                BtnRedo.IsEnabled = false;
+                _redoShapes.Clear();
+
                 // Add preview shape into list drawn shapes
                 Point position = e.GetPosition(canvas);
                 _preview.HandleEnd(position.X, position.Y);
@@ -367,6 +372,31 @@ namespace Paint
             canvas.Height = originalHeight;
             border.Width = canvas.Width;
             border.Height = canvas.Height;
+        }
+
+        private void BtnUndo_Click(object sender, RoutedEventArgs e)
+        {
+            BtnRedo.IsEnabled = true;
+
+            int countObjects = canvas.Children.Count;
+            _redoShapes.Add(_shapes.Last());
+            canvas.Children.RemoveAt(countObjects - 1);
+            _shapes.RemoveAt(countObjects - 1);
+
+            if (canvas.Children.Count == 0)
+                BtnUndo.IsEnabled = false;
+        }
+
+        private void BtnRedo_Click(object sender, RoutedEventArgs e)
+        {
+            BtnUndo.IsEnabled = true;
+
+            canvas.Children.Add(_redoShapes.Last().Draw());
+            _shapes.Add(_redoShapes.Last());
+            _redoShapes.RemoveAt(_redoShapes.Count - 1);
+
+            if (_redoShapes.Count == 0)
+                BtnRedo.IsEnabled = false;
         }
 
         private void SetOriginalCanvasToSave()

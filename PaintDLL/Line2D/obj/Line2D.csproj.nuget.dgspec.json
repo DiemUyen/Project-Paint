@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\University's Lifes\\[HK1] 2021 - 2022\\LẬP TRÌNH WINDOWS\\PROJECT 2\\19120426\\PaintDLL\\Line2D\\Line2D.csproj": {}
+    "D:\\GitHub\\Project-Paint\\PaintDLL\\Line2D\\Line2D.csproj": {}
   },
   "projects": {
-    "D:\\University's Lifes\\[HK1] 2021 - 2022\\LẬP TRÌNH WINDOWS\\PROJECT 2\\19120426\\PaintDLL\\Line2D\\Line2D.csproj": {
+    "D:\\GitHub\\Project-Paint\\PaintDLL\\Line2D\\Line2D.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\University's Lifes\\[HK1] 2021 - 2022\\LẬP TRÌNH WINDOWS\\PROJECT 2\\19120426\\PaintDLL\\Line2D\\Line2D.csproj",
+        "projectUniqueName": "D:\\GitHub\\Project-Paint\\PaintDLL\\Line2D\\Line2D.csproj",
         "projectName": "Line2D",
-        "projectPath": "D:\\University's Lifes\\[HK1] 2021 - 2022\\LẬP TRÌNH WINDOWS\\PROJECT 2\\19120426\\PaintDLL\\Line2D\\Line2D.csproj",
+        "projectPath": "D:\\GitHub\\Project-Paint\\PaintDLL\\Line2D\\Line2D.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\University's Lifes\\[HK1] 2021 - 2022\\LẬP TRÌNH WINDOWS\\PROJECT 2\\19120426\\PaintDLL\\Line2D\\obj\\",
+        "outputPath": "D:\\GitHub\\Project-Paint\\PaintDLL\\Line2D\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -20,6 +20,24 @@
                 </Fluent:Backstage>
             </Fluent:Ribbon.Menu>
 
+            <Fluent:Ribbon.QuickAccessItems>
+                <Fluent:QuickAccessMenuItem Header="Undo">
+                    <Fluent:Button Icon="/Icons/undo.png" Name="BtnUndo" Click="BtnUndo_Click" IsEnabled="False">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/undo.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:QuickAccessMenuItem>
+
+                <Fluent:QuickAccessMenuItem Header="Redo">
+                    <Fluent:Button Name="BtnRedo" Icon="/Icons/redo.png" Click="BtnRedo_Click" IsEnabled="False">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/redo.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:QuickAccessMenuItem>
+            </Fluent:Ribbon.QuickAccessItems>
+
             <Fluent:RibbonTabItem Header="Home">
                 <Fluent:RibbonGroupBox Header="Clipboard">
                     <Fluent:Button Name="BtnPaste" Icon="/Icons/paste.png" Margin="0,5,5,0" Click="BtnPaste_Click">
