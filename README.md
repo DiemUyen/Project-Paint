@@ -37,7 +37,7 @@ Application provides many functions to draw graphic objects.
   - [ ] Drag & Drop
 - [x] 7. Zooming
 - [ ] 8. Cut / Copy / Paste
-- [ ] 9. Undo, Redo
+- [x] 9. Undo, Redo
 - [ ] 10. Fill color by boundaries
 
 ## 🕰 Hours To Do
