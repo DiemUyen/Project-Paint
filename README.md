@@ -26,7 +26,7 @@ Application provides many functions to draw graphic objects.
 
 ## ⭐ Improvements
 
-- [ ] 1. Allow the user to change the color, pen width, stroke type (dash, dot, dash dot dot...
+- [x] 1. Allow the user to change the color, pen width, stroke type (dash, dot, dash dot dot...
 - [ ] 2. Adding text to the list of drawable objects
 - [x] 3. Adding image to the canvas
 - [ ] 4. Reduce flickering when drawing preview by using buffer to redraw all the canvas
