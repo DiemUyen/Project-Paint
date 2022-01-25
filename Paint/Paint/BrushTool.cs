@@ -13,6 +13,6 @@ namespace Paint
         
         public double brushWidth { get; set; }
 
-        public DoubleCollection brushType { get; set; }
+        public DoubleCollection brushStyle { get; set; }
     }
 }

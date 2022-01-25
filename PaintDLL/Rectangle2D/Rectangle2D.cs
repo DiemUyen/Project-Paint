@@ -13,13 +13,19 @@ namespace Rectangle2D
 
         public string Icon => "/Icons/rectangle.png";
 
+        public Brush ColorBorder { get; set; }
+
+        public double WidthBorder { get; set; }
+
+        public DoubleCollection StyleBorder { get; set; }
+
         public Point2D _leftTop { get; set; }
 
         public Point2D _rightBottom { get; set; }
 
-        public IShape Clone()
+        public IShape Clone(Brush color, double width, DoubleCollection style)
         {
-            return new Rectangle2D();
+            return new Rectangle2D() { ColorBorder = color, WidthBorder = width, StyleBorder = style };
         }
 
         public UIElement Draw()
@@ -28,8 +34,9 @@ namespace Rectangle2D
             {
                 Width = Math.Abs(_rightBottom.X - _leftTop.X),
                 Height = Math.Abs(_rightBottom.Y - _leftTop.Y),
-                Stroke = new SolidColorBrush(Colors.Red),
-                StrokeThickness = 1
+                Stroke = ColorBorder,
+                StrokeThickness = WidthBorder,
+                StrokeDashArray = StyleBorder
             };
 
             if (_leftTop.X > _rightBottom.X && _leftTop.Y < _rightBottom.Y)

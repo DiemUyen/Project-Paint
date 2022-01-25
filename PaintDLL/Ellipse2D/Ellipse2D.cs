@@ -13,13 +13,19 @@ namespace Ellipse2D
 
         public string Icon => "/Icons/ellipse.png";
 
+        public Brush ColorBorder { get; set; }
+
+        public double WidthBorder { get; set; }
+
+        public DoubleCollection StyleBorder { get; set; }
+
         public Point2D _leftTop { get; set; }
 
         public Point2D _rightBottom { get; set; }
 
-        public IShape Clone()
+        public IShape Clone(Brush color, double width, DoubleCollection style)
         {
-            return new Ellipse2D();
+            return new Ellipse2D() { ColorBorder = color, WidthBorder = width, StyleBorder = style };
         }
 
         public UIElement Draw()
@@ -28,8 +34,9 @@ namespace Ellipse2D
             {
                 Width = Math.Abs(_rightBottom.X - _leftTop.X),
                 Height = Math.Abs(_rightBottom.Y - _leftTop.Y),
-                StrokeThickness = 1,
-                Stroke = new SolidColorBrush(Colors.Black)
+                Stroke = ColorBorder,
+                StrokeThickness = WidthBorder,
+                StrokeDashArray = StyleBorder
             };
 
             if (_leftTop.X > _rightBottom.X && _leftTop.Y < _rightBottom.Y)

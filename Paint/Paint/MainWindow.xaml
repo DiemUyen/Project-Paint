@@ -68,12 +68,28 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Brush">
-                    <Fluent:DropDownButton Name="BtnSize" Header="Size" Icon="/Icons/line-width.png">
-                        
+                    <Fluent:DropDownButton Name="DropdownBtnSize" Header="Size" Icon="/Icons/line-width.png">
+                        <ListView Name="SizeList">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Name="BtnSize" ToolTip="{Binding brushWidth}" Background="White" Width="150" Height="30" BorderBrush="White" Padding="10" Click="BtnSize_Click">
+                                        <Line StrokeThickness="{Binding brushWidth}" Stroke="Black" X1="0" Y1="0" X2="100" Y2="0"/>
+                                    </Button>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Fluent:DropDownButton>
 
-                    <Fluent:DropDownButton Name="BtnStyle" Header="Style" Icon="/Icons/line-style.png">
-                        
+                    <Fluent:DropDownButton Name="DropdownBtnStyle" Header="Style" Icon="/Icons/line-style.png">
+                        <ListView Name="StyleList">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Name="BtnStyle" Background="White" Width="150" Height="30" BorderBrush="White" Padding="10" Click="BtnStyle_Click" Tag="{Binding brushStyle}">
+                                        <Line StrokeDashArray="{Binding brushStyle}" Stroke="Black" X1="0" Y1="0" X2="100" Y2="0" StrokeThickness="2"/>
+                                    </Button>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Fluent:DropDownButton>
                 </Fluent:RibbonGroupBox>
 
@@ -98,8 +114,8 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Colors">
-                    <Fluent:Button Name="BtnBrushColor" SizeDefinition="Small" Margin="5, 5, 5, 15" Background="Black"/>
-                    <Fluent:Button Name="BtnEraserColor" SizeDefinition="Small" Margin="5, 5, 5, 0" Background="White"/>
+                    <Fluent:Button Name="BtnBrushColor" SizeDefinition="Small" Margin="5, 5, 5, 15" Background="Black" Click="BtnBrushColor_Click"/>
+                    <Fluent:Button Name="BtnEraserColor" SizeDefinition="Small" Margin="5, 5, 5, 0" Background="White" Click="BtnEraserColor_Click"/>
 
                     <ListView Name="ColorList" Width="305" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="White">
                         <ListView.ItemsPanel>

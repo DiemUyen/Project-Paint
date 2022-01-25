@@ -44,6 +44,10 @@ namespace Paint
         ScaleTransform scaleTransform = new ScaleTransform();
         int zoomOutTimes, zoomInTimes;
         List<IShape> _redoShapes = new List<IShape>();
+        List<BrushTool> _btnBrushSizeList = new List<BrushTool>();
+        List<BrushTool> _btnBrushStyleList = new List<BrushTool>();
+        BrushTool brush;
+        bool isBrushColorChoose = true;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -72,11 +76,14 @@ namespace Paint
                 }
             }
 
+            // Create brush to draw
+            brush = new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } };
+
             // Create orginal data
             TitleName = "Untitled";
             ShapeList.ItemsSource = _shapeButtons;
             _selectedShapeName = _prototypes.First().Value.Name;
-            _preview = _prototypes[_selectedShapeName].Clone();
+            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
             DataContext = this;
             zoomInTimes = 0;
             zoomOutTimes = 0;
@@ -116,6 +123,24 @@ namespace Paint
             _colors.Add(new CustomColor() { ColorName = "Lavender", HexColor = new SolidColorBrush(Colors.Lavender) });
 
             ColorList.ItemsSource = _colors;
+
+            // Create size button list
+            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1 } });
+            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 2, brushStyle = new DoubleCollection() { 1 } });
+            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 3, brushStyle = new DoubleCollection() { 1 } });
+            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 4, brushStyle = new DoubleCollection() { 1 } });
+
+            SizeList.ItemsSource = _btnBrushSizeList;
+
+            // Create style button list
+            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } });
+            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1 } });
+            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 6 } });
+            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 6, 1 } });
+            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 4, 1, 1, 1, 1, 1 } });
+            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 2, 4 } });
+
+            StyleList.ItemsSource = _btnBrushStyleList;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -167,7 +192,7 @@ namespace Paint
                 _shapes.Add(_preview);
 
                 // Create the next shape
-                _preview = _prototypes[_selectedShapeName].Clone();
+                _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
 
                 // Delete previous drawn shapes
                 canvas.Children.Clear();
@@ -198,7 +223,7 @@ namespace Paint
         private void BtnShape_Click(object sender, RoutedEventArgs e)
         {
             _selectedShapeName = (sender as Fluent.Button).Tag as string;
-            _preview = _prototypes[_selectedShapeName].Clone();
+            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -326,13 +351,31 @@ namespace Paint
             if (colorPicker.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 var color = colorPicker.Color;
-                BtnBrushColor.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                if (isBrushColorChoose)
+                {
+                    brush.brushColor = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                    _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+                    BtnBrushColor.Background = brush.brushColor;
+                }
+                else
+                {
+                    BtnEraserColor.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                }
             }
         }
 
         private void BtnColor_Click(object sender, RoutedEventArgs e)
         {
-
+            if (isBrushColorChoose)
+            {
+                brush.brushColor = (sender as System.Windows.Controls.Button).Background;
+                _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+                BtnBrushColor.Background = brush.brushColor;
+            }
+            else
+            {
+                BtnEraserColor.Background = (sender as System.Windows.Controls.Button).Background;
+            }
         }
 
         private void BtnZoomIn_Click(object sender, RoutedEventArgs e)
@@ -372,6 +415,10 @@ namespace Paint
             canvas.Height = originalHeight;
             border.Width = canvas.Width;
             border.Height = canvas.Height;
+
+            // Set the original brush
+            brush = new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } };
+            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
         }
 
         private void BtnUndo_Click(object sender, RoutedEventArgs e)
@@ -397,6 +444,30 @@ namespace Paint
 
             if (_redoShapes.Count == 0)
                 BtnRedo.IsEnabled = false;
+        }
+
+        private void BtnSize_Click(object sender, RoutedEventArgs e)
+        {
+            var width = (sender as System.Windows.Controls.Button).ToolTip.ToString();
+            brush.brushWidth = Int32.Parse(width);
+            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+        }
+
+        private void BtnStyle_Click(object sender, RoutedEventArgs e)
+        {
+            var style = (sender as System.Windows.Controls.Button).Tag;
+            brush.brushStyle = DoubleCollection.Parse(style.ToString());
+            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+        }
+
+        private void BtnBrushColor_Click(object sender, RoutedEventArgs e)
+        {
+            isBrushColorChoose = true;
+        }
+
+        private void BtnEraserColor_Click(object sender, RoutedEventArgs e)
+        {
+            isBrushColorChoose = false;
         }
 
         private void SetOriginalCanvasToSave()

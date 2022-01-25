@@ -15,13 +15,19 @@ namespace Contract
 
         public string Icon => "";
 
+        public Brush ColorBorder { get; set; }
+
+        public double WidthBorder { get; set; }
+
+        public DoubleCollection StyleBorder { get; set; }
+
         public double X { get; set; }
         
         public double Y { get; set; }
 
-        public IShape Clone()
+        public IShape Clone(Brush color, double width, DoubleCollection style)
         {
-            return new Point2D();
+            return new Point2D() { ColorBorder = color, WidthBorder = width, StyleBorder = style };
         }
 
         public UIElement Draw()
@@ -32,8 +38,9 @@ namespace Contract
                 Y1 = Y,
                 X2 = X,
                 Y2 = Y,
-                StrokeThickness = 1,
-                Stroke = new SolidColorBrush(Colors.Black)
+                StrokeThickness = WidthBorder,
+                Stroke = ColorBorder,
+                StrokeDashArray = StyleBorder
             };
 
             return point;

@@ -12,13 +12,19 @@ namespace Line2D
 
         public string Icon => "/Icons/line.png";
 
+        public Brush ColorBorder { get; set; }
+
+        public double WidthBorder { get; set; }
+
+        public DoubleCollection StyleBorder { get; set; }
+
         public Point2D _start { get; set; }
         
         public Point2D _end { get; set; }
 
-        public IShape Clone()
+        public IShape Clone(Brush color, double width, DoubleCollection style)
         {
-            return new Line2D();
+            return new Line2D() { ColorBorder = color, WidthBorder = width, StyleBorder = style };
         }
 
         public UIElement Draw()
@@ -29,8 +35,9 @@ namespace Line2D
                 Y1 = _start.Y,
                 X2 = _end.X,
                 Y2 = _end.Y,
-                StrokeThickness = 1,
-                Stroke = new SolidColorBrush(Colors.Black)
+                Stroke = ColorBorder,
+                StrokeThickness = WidthBorder,
+                StrokeDashArray = StyleBorder
             };
 
             return line;
