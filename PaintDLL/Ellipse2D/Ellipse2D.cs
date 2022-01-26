@@ -36,7 +36,8 @@ namespace Ellipse2D
                 Height = Math.Abs(_rightBottom.Y - _leftTop.Y),
                 Stroke = ColorBorder,
                 StrokeThickness = WidthBorder,
-                StrokeDashArray = StyleBorder
+                StrokeDashArray = StyleBorder,
+                Fill = new SolidColorBrush(Colors.Transparent)
             };
 
             if (_leftTop.X > _rightBottom.X && _leftTop.Y < _rightBottom.Y)

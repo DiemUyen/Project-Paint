@@ -48,6 +48,10 @@ namespace Paint
         List<BrushTool> _btnBrushStyleList = new List<BrushTool>();
         BrushTool brush;
         bool isBrushColorChoose = true;
+        AdornerLayer adornerLayer;
+        List<DependencyObject> hitTestList = new();
+        List<int> _selectedIndexShapes = new();
+        bool isSelectedShape = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -151,9 +155,40 @@ namespace Paint
                 return;
             }
 
-            isSaved = false;
-            isDrawing = true;
-            _preview.HandleStart(position.X, position.Y);
+            VisualTreeHelper.HitTest(canvas, null, new HitTestResultCallback(CustomHitTestResult), new PointHitTestParameters(position));
+            if (hitTestList[0] != canvas)
+            {
+                int selectedIndex = canvas.Children.IndexOf(hitTestList[0] as UIElement);
+                var result = _selectedIndexShapes.Remove(selectedIndex);
+                if (result)
+                {
+                    adornerLayer.Remove(adornerLayer.GetAdorners(hitTestList[0] as UIElement)[0]);
+                    if (_selectedIndexShapes.Count == 0)
+                        isSelectedShape = false;
+                    return;
+                }
+
+                Rect rect = VisualTreeHelper.GetDescendantBounds(hitTestList[0] as Visual);
+                adornerLayer = AdornerLayer.GetAdornerLayer(hitTestList[0] as Visual);
+                adornerLayer.Add(new RectangleAdorner(hitTestList[0] as UIElement, rect));
+                _selectedIndexShapes.Add(selectedIndex);
+                isSelectedShape = true;
+            }
+            else
+            {
+                isSaved = false;
+                isDrawing = true;
+                isSelectedShape = false;
+                _selectedIndexShapes.Clear();
+                _preview.HandleStart(position.X, position.Y);
+            }
+        }
+
+        public HitTestResultBehavior CustomHitTestResult(HitTestResult result)
+        {
+            hitTestList.Clear();
+            hitTestList.Add(result.VisualHit);
+            return HitTestResultBehavior.Stop;
         }
 
         private void Border_MouseMove(object sender, MouseEventArgs e)
@@ -347,34 +382,67 @@ namespace Paint
 
         private void BtnColorPicker_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.ColorDialog colorPicker = new System.Windows.Forms.ColorDialog();
-            if (colorPicker.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            System.Windows.Forms.ColorDialog colorPickerDialog = new System.Windows.Forms.ColorDialog();
+            if (colorPickerDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                var color = colorPicker.Color;
-                if (isBrushColorChoose)
+                var colorPicked = colorPickerDialog.Color;
+                var color = new SolidColorBrush(Color.FromArgb(colorPicked.A, colorPicked.R, colorPicked.G, colorPicked.B));
+
+                if (isSelectedShape)
                 {
-                    brush.brushColor = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
-                    _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
-                    BtnBrushColor.Background = brush.brushColor;
+                    foreach(var i in _selectedIndexShapes)
+                    {
+                        _shapes[i].ColorBorder = color;
+                    }
+
+                    // Redraw
+                    canvas.Children.Clear();
+                    foreach (var shape in _shapes)
+                        canvas.Children.Add(shape.Draw());
                 }
                 else
                 {
-                    BtnEraserColor.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                    if (isBrushColorChoose)
+                    {
+                        brush.brushColor = color;
+                        _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+                        BtnBrushColor.Background = brush.brushColor;
+                    }
+                    else
+                    {
+                        BtnEraserColor.Background = color;
+                    }
                 }
             }
         }
 
         private void BtnColor_Click(object sender, RoutedEventArgs e)
         {
-            if (isBrushColorChoose)
+            var color = (sender as System.Windows.Controls.Button).Background;
+            if (isSelectedShape)
             {
-                brush.brushColor = (sender as System.Windows.Controls.Button).Background;
-                _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
-                BtnBrushColor.Background = brush.brushColor;
+                foreach (var i in _selectedIndexShapes)
+                {
+                    _shapes[i].ColorBorder = color;
+                }
+
+                // Redraw
+                canvas.Children.Clear();
+                foreach (var shape in _shapes)
+                    canvas.Children.Add(shape.Draw());
             }
             else
             {
-                BtnEraserColor.Background = (sender as System.Windows.Controls.Button).Background;
+                if (isBrushColorChoose)
+                {
+                    brush.brushColor = color;
+                    _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+                    BtnBrushColor.Background = brush.brushColor;
+                }
+                else
+                {
+                    BtnEraserColor.Background = color;
+                }
             }
         }
 
@@ -418,6 +486,7 @@ namespace Paint
 
             // Set the original brush
             brush = new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } };
+            _selectedShapeName = _prototypes.First().Key;
             _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
         }
 
@@ -511,3 +580,6 @@ namespace Paint
         }
     }
 }
+// TODO: draw adorner again after edit -> create function
+// TODO: hook to draw circle and square
+// TODO: create thumb to edit size of selected object

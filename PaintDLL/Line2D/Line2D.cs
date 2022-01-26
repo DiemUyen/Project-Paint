@@ -37,7 +37,8 @@ namespace Line2D
                 Y2 = _end.Y,
                 Stroke = ColorBorder,
                 StrokeThickness = WidthBorder,
-                StrokeDashArray = StyleBorder
+                StrokeDashArray = StyleBorder,
+                Fill = new SolidColorBrush(Colors.Transparent)
             };
 
             return line;
