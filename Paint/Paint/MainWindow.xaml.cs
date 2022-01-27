@@ -171,6 +171,7 @@ namespace Paint
                 Rect rect = VisualTreeHelper.GetDescendantBounds(hitTestList[0] as Visual);
                 adornerLayer = AdornerLayer.GetAdornerLayer(hitTestList[0] as Visual);
                 adornerLayer.Add(new RectangleAdorner(hitTestList[0] as UIElement, rect));
+
                 _selectedIndexShapes.Add(selectedIndex);
                 isSelectedShape = true;
             }
@@ -390,7 +391,7 @@ namespace Paint
 
                 if (isSelectedShape)
                 {
-                    foreach(var i in _selectedIndexShapes)
+                    foreach (var i in _selectedIndexShapes)
                     {
                         _shapes[i].ColorBorder = color;
                     }
@@ -399,6 +400,8 @@ namespace Paint
                     canvas.Children.Clear();
                     foreach (var shape in _shapes)
                         canvas.Children.Add(shape.Draw());
+                    isSelectedShape = false;
+                    _selectedIndexShapes.Clear();
                 }
                 else
                 {
@@ -430,6 +433,8 @@ namespace Paint
                 canvas.Children.Clear();
                 foreach (var shape in _shapes)
                     canvas.Children.Add(shape.Draw());
+                isSelectedShape = false;
+                _selectedIndexShapes.Clear();
             }
             else
             {
@@ -518,15 +523,46 @@ namespace Paint
         private void BtnSize_Click(object sender, RoutedEventArgs e)
         {
             var width = (sender as System.Windows.Controls.Button).ToolTip.ToString();
-            brush.brushWidth = Int32.Parse(width);
-            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+
+            if (isSelectedShape)
+            {
+                foreach (var i in _selectedIndexShapes)
+                    _shapes[i].WidthBorder = Int32.Parse(width);
+
+                // Redraw
+                canvas.Children.Clear();
+                foreach (var shape in _shapes)
+                    canvas.Children.Add(shape.Draw());
+                isSelectedShape = false;
+                _selectedIndexShapes.Clear();
+            }
+            else
+            {
+                brush.brushWidth = Int32.Parse(width);
+                _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+            }
         }
 
         private void BtnStyle_Click(object sender, RoutedEventArgs e)
         {
             var style = (sender as System.Windows.Controls.Button).Tag;
-            brush.brushStyle = DoubleCollection.Parse(style.ToString());
-            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+            if (isSelectedShape)
+            {
+                foreach (var i in _selectedIndexShapes)
+                    _shapes[i].StyleBorder = DoubleCollection.Parse(style.ToString());
+
+                // Redraw
+                canvas.Children.Clear();
+                foreach (var shape in _shapes)
+                    canvas.Children.Add(shape.Draw());
+                isSelectedShape = false;
+                _selectedIndexShapes.Clear();
+            }
+            else
+            {
+                brush.brushStyle = DoubleCollection.Parse(style.ToString());
+                _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+            }
         }
 
         private void BtnBrushColor_Click(object sender, RoutedEventArgs e)
@@ -580,6 +616,6 @@ namespace Paint
         }
     }
 }
-// TODO: draw adorner again after edit -> create function
+
 // TODO: hook to draw circle and square
 // TODO: create thumb to edit size of selected object
