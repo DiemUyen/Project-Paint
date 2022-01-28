@@ -15,7 +15,8 @@
                     <Fluent:BackstageTabControl>
                         <Fluent:Button Header="New" Name="BtnNew" Click="BtnNew_Click"/>
                         <Fluent:Button Header="Open" Name="BtnOpen" Click="BtnOpen_Click"/>
-                        <Fluent:Button Header="Save" Name="BtnSave" Click="BtnSave_Click"/>
+                        <Fluent:Button Header="Save as Binary" Name="BtnSaveAsBinary" Click="BtnSaveAsBinary_Click"/>
+                        <Fluent:Button Header="Save as PNG" Name="BtnSaveAsPng" Click="BtnSaveAsPng_Click"/>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>
             </Fluent:Ribbon.Menu>

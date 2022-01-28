@@ -19,9 +19,9 @@ namespace Ellipse2D
 
         public DoubleCollection StyleBorder { get; set; }
 
-        public Point2D _leftTop { get; set; }
+        public Point2D LeftTop { get; set; }
 
-        public Point2D _rightBottom { get; set; }
+        public Point2D RightBottom { get; set; }
 
         public IShape Clone(Brush color, double width, DoubleCollection style)
         {
@@ -32,33 +32,33 @@ namespace Ellipse2D
         {
             Ellipse ellipse = new Ellipse()
             {
-                Width = Math.Abs(_rightBottom.X - _leftTop.X),
-                Height = Math.Abs(_rightBottom.Y - _leftTop.Y),
+                Width = Math.Abs(RightBottom.X - LeftTop.X),
+                Height = Math.Abs(RightBottom.Y - LeftTop.Y),
                 Stroke = ColorBorder,
                 StrokeThickness = WidthBorder,
                 StrokeDashArray = StyleBorder,
                 Fill = new SolidColorBrush(Colors.Transparent)
             };
 
-            if (_leftTop.X > _rightBottom.X && _leftTop.Y < _rightBottom.Y)
+            if (LeftTop.X > RightBottom.X && LeftTop.Y < RightBottom.Y)
             {
-                Canvas.SetLeft(ellipse, _rightBottom.X);
-                Canvas.SetTop(ellipse, _leftTop.Y);
+                Canvas.SetLeft(ellipse, RightBottom.X);
+                Canvas.SetTop(ellipse, LeftTop.Y);
             }
-            else if (_leftTop.X > _rightBottom.X && _leftTop.Y > _rightBottom.Y)
+            else if (LeftTop.X > RightBottom.X && LeftTop.Y > RightBottom.Y)
             {
-                Canvas.SetLeft(ellipse, _rightBottom.X);
-                Canvas.SetTop(ellipse, _rightBottom.Y);
+                Canvas.SetLeft(ellipse, RightBottom.X);
+                Canvas.SetTop(ellipse, RightBottom.Y);
             }
-            else if (_leftTop.X < _rightBottom.X && _leftTop.Y > _rightBottom.Y)
+            else if (LeftTop.X < RightBottom.X && LeftTop.Y > RightBottom.Y)
             {
-                Canvas.SetLeft(ellipse, _leftTop.X);
-                Canvas.SetTop(ellipse, _rightBottom.Y);
+                Canvas.SetLeft(ellipse, LeftTop.X);
+                Canvas.SetTop(ellipse, RightBottom.Y);
             }
             else
             {
-                Canvas.SetLeft(ellipse, _leftTop.X);
-                Canvas.SetTop(ellipse, _leftTop.Y);
+                Canvas.SetLeft(ellipse, LeftTop.X);
+                Canvas.SetTop(ellipse, LeftTop.Y);
             }
 
             return ellipse;
@@ -66,12 +66,12 @@ namespace Ellipse2D
 
         public void HandleEnd(double x, double y)
         {
-            _rightBottom = new Point2D() { X = x, Y = y };
+            RightBottom = new Point2D() { X = x, Y = y };
         }
 
         public void HandleStart(double x, double y)
         {
-            _leftTop = new Point2D() { X = x, Y = y };
+            LeftTop = new Point2D() { X = x, Y = y };
         }
     }
 }

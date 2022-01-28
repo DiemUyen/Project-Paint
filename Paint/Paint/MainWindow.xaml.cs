@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using Fluent;
 using Microsoft.Win32;
 using System.ComponentModel;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Paint
 {
@@ -52,6 +53,7 @@ namespace Paint
         List<DependencyObject> hitTestList = new();
         List<int> _selectedIndexShapes = new();
         bool isSelectedShape = false;
+        Dictionary<string, IShapeToStringConverter> _converters = new Dictionary<string, IShapeToStringConverter>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -76,6 +78,12 @@ namespace Paint
                         var shape = Activator.CreateInstance(type) as IShape;
                         _prototypes.Add(shape.Name, shape);
                         _shapeButtons.Add(shape);
+                    }
+
+                    if (type.IsClass && typeof(IShapeToStringConverter).IsAssignableFrom(type))
+                    {
+                        var shapeConverter = Activator.CreateInstance(type) as IShapeToStringConverter;
+                        _converters.Add(shapeConverter.Name, shapeConverter);
                     }
                 }
             }
@@ -248,12 +256,15 @@ namespace Paint
 
         private void BtnCut_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach (var i in _selectedIndexShapes)
+            {
+                Clipboard.SetDataObject(_shapes[i]);
+            }
         }
 
         private void BtnCopy_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void BtnShape_Click(object sender, RoutedEventArgs e)
@@ -262,7 +273,30 @@ namespace Paint
             _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
         }
 
-        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        private void BtnSaveAsBinary_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Binary file|*.bin";
+
+            if (dialog.ShowDialog() == true)
+            {
+                List<string> data = new List<string>();
+                foreach (var shape in _shapes)
+                {
+                    data.Add(_converters[shape.Name].ConvertToData(shape));
+                }
+
+                using (FileStream output = File.OpenWrite(dialog.FileName))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(output, data);
+                }
+
+                MessageBox.Show("Save successfully.");
+            }
+        }
+
+        private void BtnSaveAsPng_Click(object sender, RoutedEventArgs e)
         {
             bool result = SaveCanvasToImage();
             if (result)
@@ -352,24 +386,44 @@ namespace Paint
         private void BtnOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All image files|*.png;*jpeg;*jpg;*bmp|PNG|*png|JPEG|*jpg;*jpeg|BMP|*.bmp";
+            dialog.Filter = "All files|*.png;*.jpeg;*.jpg;*.bmp;*.bin|All image files|*.png;*.jpeg;*.jpg;*.bmp|PNG|*.png|JPEG|*.jpg;*.jpeg|BMP|*.bmp|BIN|*.bin";
             dialog.Multiselect = false;
+
             if (dialog.ShowDialog() == true)
             {
-                string imageFilename = dialog.FileName;
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(imageFilename, UriKind.RelativeOrAbsolute);
-                bitmap.EndInit();
+                string filename = dialog.FileName;
+                if (System.IO.Path.GetExtension(filename) == ".bin")
+                {
+                    using (FileStream input = File.OpenRead(filename))
+                    {
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        List<string> read = formatter.Deserialize(input) as List<string>;
+                        foreach (var item in read)
+                        {
+                            int firstSpace = item.IndexOf(" ");
+                            string shapeName = item.Substring(0, firstSpace);
+                            IShape shape = _converters[shapeName].ConvertToUI(item);
+                            _shapes.Add(shape);
+                            canvas.Children.Add(shape.Draw());
+                        }
+                    }
+                }
+                else
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(filename, UriKind.RelativeOrAbsolute);
+                    bitmap.EndInit();
 
-                ImageBrush imageBrush = new ImageBrush();
-                imageBrush.ImageSource = bitmap;
-                canvas.Width = bitmap.Width;
-                canvas.Height = bitmap.Height;
-                border.Width = bitmap.Width;
-                border.Height = bitmap.Height;
-                canvas.Background = imageBrush;
-                UpdateTitle(imageFilename);
+                    ImageBrush imageBrush = new ImageBrush();
+                    imageBrush.ImageSource = bitmap;
+                    canvas.Width = bitmap.Width;
+                    canvas.Height = bitmap.Height;
+                    border.Width = bitmap.Width;
+                    border.Height = bitmap.Height;
+                    canvas.Background = imageBrush;
+                    UpdateTitle(filename);
+                }
             }
         }
 

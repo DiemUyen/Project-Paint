@@ -18,9 +18,9 @@ namespace Line2D
 
         public DoubleCollection StyleBorder { get; set; }
 
-        public Point2D _start { get; set; }
+        public Point2D Start { get; set; }
         
-        public Point2D _end { get; set; }
+        public Point2D End { get; set; }
 
         public IShape Clone(Brush color, double width, DoubleCollection style)
         {
@@ -31,10 +31,10 @@ namespace Line2D
         {
             Line line = new Line()
             {
-                X1 = _start.X,
-                Y1 = _start.Y,
-                X2 = _end.X,
-                Y2 = _end.Y,
+                X1 = Start.X,
+                Y1 = Start.Y,
+                X2 = End.X,
+                Y2 = End.Y,
                 Stroke = ColorBorder,
                 StrokeThickness = WidthBorder,
                 StrokeDashArray = StyleBorder,
@@ -46,12 +46,12 @@ namespace Line2D
 
         public void HandleEnd(double x, double y)
         {
-            _end = new Point2D() { X = x, Y = y };
+            End = new Point2D() { X = x, Y = y };
         }
 
         public void HandleStart(double x, double y)
         {
-            _start = new Point2D() { X = x, Y = y };
+            Start = new Point2D() { X = x, Y = y };
         }
     }
 }
