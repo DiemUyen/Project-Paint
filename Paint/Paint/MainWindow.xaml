@@ -10,66 +10,49 @@
 
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top">
-            <Fluent:Ribbon.Menu>
-                <Fluent:Backstage Header="File">
-                    <Fluent:BackstageTabControl>
-                        <Fluent:Button Header="New" Name="BtnNew" Click="BtnNew_Click"/>
-                        <Fluent:Button Header="Open" Name="BtnOpen" Click="BtnOpen_Click"/>
-                        <Fluent:Button Header="Save as Binary" Name="BtnSaveAsBinary" Click="BtnSaveAsBinary_Click"/>
-                        <Fluent:Button Header="Save as PNG" Name="BtnSaveAsPng" Click="BtnSaveAsPng_Click"/>
-                    </Fluent:BackstageTabControl>
-                </Fluent:Backstage>
-            </Fluent:Ribbon.Menu>
+            <Fluent:RibbonTabItem Header="Home">
+                <Fluent:RibbonGroupBox Header="Project">
+                    <Fluent:Button Header="New" Name="BtnNew" Click="BtnNew_Click" Icon="/Icons/create-new.png" Width="50">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/create-new.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:DropDownButton Header="Add" Icon="/Icons/add.png" Width="50">
+                        <Fluent:Button Header="Binary File" Name="BtnOpenBinaryFile" Click="BtnOpenBinaryFile_Click" Icon="/Icons/open-bin-file.png" Width="100">
+                            <Fluent:Button.LargeIcon>
+                                <Image Source="/Icons/open-bin-file.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Fluent:Button.LargeIcon>
+                        </Fluent:Button>
 
-            <Fluent:Ribbon.QuickAccessItems>
-                <Fluent:QuickAccessMenuItem Header="Undo">
-                    <Fluent:Button Icon="/Icons/undo.png" Name="BtnUndo" Click="BtnUndo_Click" IsEnabled="False">
+                        <Fluent:Button Header="Image File" Name="BtnOpenImageFile" Click="BtnOpenImageFile_Click" Icon="/Icons/add-image.png" Width="100">
+                            <Fluent:Button.LargeIcon>
+                                <Image Source="/Icons/add-image.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Fluent:Button.LargeIcon>
+                        </Fluent:Button>
+                    </Fluent:DropDownButton>
+
+                    <Fluent:DropDownButton Header="Save" Icon="/Icons/save-as.png" Width="50">
+                        <Fluent:Button Header="Save as Binary" Name="BtnSaveAsBinary" Click="BtnSaveAsBinary_Click" SizeDefinition="Middle" Width="120"/>
+                        <Fluent:Button Header="Save as PNG" Name="BtnSaveAsPng" Click="BtnSaveAsPng_Click" SizeDefinition="Middle" Width="120"/>
+                    </Fluent:DropDownButton>
+                </Fluent:RibbonGroupBox>
+                
+                <Fluent:RibbonGroupBox Header="Tools">
+                    <Fluent:Button Icon="/Icons/undo.png" Name="BtnUndo" Click="BtnUndo_Click" IsEnabled="False" Width="50">
                         <Fluent:Button.LargeIcon>
                             <Image Source="/Icons/undo.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                </Fluent:QuickAccessMenuItem>
 
-                <Fluent:QuickAccessMenuItem Header="Redo">
-                    <Fluent:Button Name="BtnRedo" Icon="/Icons/redo.png" Click="BtnRedo_Click" IsEnabled="False">
+                    <Fluent:Button Name="BtnRedo" Icon="/Icons/redo.png" Click="BtnRedo_Click" IsEnabled="False" Width="50">
                         <Fluent:Button.LargeIcon>
                             <Image Source="/Icons/redo.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                </Fluent:QuickAccessMenuItem>
-            </Fluent:Ribbon.QuickAccessItems>
-
-            <Fluent:RibbonTabItem Header="Home">
-                <Fluent:RibbonGroupBox Header="Clipboard">
-                    <Fluent:Button Name="BtnPaste" Icon="/Icons/paste.png" Margin="0,5,5,0" Click="BtnPaste_Click">
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="/Icons/paste.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-
-                    <Fluent:Button Name="BtnCut" Icon="/Icons/cut.png" Margin="0,5,0,10" Height="30" Click="BtnCut_Click" SizeDefinition="Small">
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="/Icons/cut.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-
-                    <Fluent:Button Name="BtnCopy" Icon="/Icons/copy.png" Height="30" Click="BtnCopy_Click" SizeDefinition="Small">
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="/Icons/copy.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                </Fluent:RibbonGroupBox>
-
-                <Fluent:RibbonGroupBox Header="Image">
-
-                </Fluent:RibbonGroupBox>
-
-                <Fluent:RibbonGroupBox Header="Tools">
-
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Brush">
-                    <Fluent:DropDownButton Name="DropdownBtnSize" Header="Size" Icon="/Icons/line-width.png">
+                    <Fluent:DropDownButton Name="DropdownBtnSize" Header="Size" Icon="/Icons/line-width.png" Width="50">
                         <ListView Name="SizeList">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -81,7 +64,7 @@
                         </ListView>
                     </Fluent:DropDownButton>
 
-                    <Fluent:DropDownButton Name="DropdownBtnStyle" Header="Style" Icon="/Icons/line-style.png">
+                    <Fluent:DropDownButton Name="DropdownBtnStyle" Header="Style" Icon="/Icons/line-style.png" Width="50">
                         <ListView Name="StyleList">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -95,7 +78,7 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Shapes">
-                    <ListView Name="ShapeList" Width="200">
+                    <ListView Name="ShapeList" Width="200" Margin="10, 0, 10, 0">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
@@ -115,10 +98,9 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Colors">
-                    <Fluent:Button Name="BtnBrushColor" SizeDefinition="Small" Margin="5, 5, 5, 15" Background="Black" Click="BtnBrushColor_Click"/>
-                    <Fluent:Button Name="BtnEraserColor" SizeDefinition="Small" Margin="5, 5, 5, 0" Background="White" Click="BtnEraserColor_Click"/>
+                    <Fluent:Button Name="BtnBrushColor" SizeDefinition="Small" Margin="15, 20, 15, 0" Background="Black" />
 
-                    <ListView Name="ColorList" Width="305" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="White">
+                    <ListView Name="ColorList" Width="330" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="White">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
@@ -132,9 +114,9 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <Fluent:Button Name="BtnColorPicker" Icon="/Icons/color-wheel.png" Click="BtnColorPicker_Click">
+                    <Fluent:Button Name="BtnColorPicker" Icon="/Icons/paint-palette.png" Click="BtnColorPicker_Click" Width="50">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="/Icons/color-wheel.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="/Icons/paint-palette.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
@@ -142,15 +124,25 @@
 
             <Fluent:RibbonTabItem Header="View">
                 <Fluent:RibbonGroupBox Header="Zoom">
-                    <Fluent:Button Name="BtnZoomIn" Header="Zoom in" Icon="/Icons/zoom-in.png" Click="BtnZoomIn_Click">
+                    <Fluent:Button Name="BtnZoomIn" Header="Zoom in" Icon="/Icons/zoom-in.png" Click="BtnZoomIn_Click" Width="50">
                         <Fluent:Button.LargeIcon>
                             <Image Source="/Icons/zoom-in.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
 
-                    <Fluent:Button Name="BtnZoomOut" Header="Zoom out" Icon="/Icons/zoom-out.png" Click="BtnZoomOut_Click">
+                    <Fluent:Button Name="BtnZoomOut" Header="Zoom out" Icon="/Icons/zoom-out.png" Click="BtnZoomOut_Click" Width="50">
                         <Fluent:Button.LargeIcon>
                             <Image Source="/Icons/zoom-out.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Help">
+                <Fluent:RibbonGroupBox Header="Info">
+                    <Fluent:Button Name="BtnInfo" Header="Info" Icon="/Icons/info.png" Click="BtnInfo_Click" Width="50">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="/Icons/info.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>

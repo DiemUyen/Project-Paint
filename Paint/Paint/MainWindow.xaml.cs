@@ -19,6 +19,7 @@ using Fluent;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace Paint
 {
@@ -41,14 +42,13 @@ namespace Paint
         string projectPath = "";
         bool isSaved = true;
         double originalWidth, originalHeight;
-        List<CustomColor> _colors = new List<CustomColor>();
+        BindingList<CustomColor> _colors = new BindingList<CustomColor>();
         ScaleTransform scaleTransform = new ScaleTransform();
         int zoomOutTimes, zoomInTimes;
         List<IShape> _redoShapes = new List<IShape>();
         List<BrushTool> _btnBrushSizeList = new List<BrushTool>();
         List<BrushTool> _btnBrushStyleList = new List<BrushTool>();
         BrushTool brush;
-        bool isBrushColorChoose = true;
         AdornerLayer adornerLayer;
         List<DependencyObject> hitTestList = new();
         List<int> _selectedIndexShapes = new();
@@ -61,98 +61,105 @@ namespace Paint
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Load all graphic objects from external DLL files
-            projectPath = AppDomain.CurrentDomain.BaseDirectory;
-            string exeFolderPath = projectPath + "\\DLL";
-            var dllFiles = new DirectoryInfo(exeFolderPath).GetFiles("*.dll");
-
-            foreach (var dll in dllFiles)
+            try
             {
-                var assembly = Assembly.LoadFile(dll.FullName);
-                var types = assembly.GetTypes();
-                
-                foreach (var type in types)
-                {
-                    if (type.IsClass && typeof(IShape).IsAssignableFrom(type))
-                    {
-                        var shape = Activator.CreateInstance(type) as IShape;
-                        _prototypes.Add(shape.Name, shape);
-                        _shapeButtons.Add(shape);
-                    }
+                // Load all graphic objects from external DLL files
+                projectPath = AppDomain.CurrentDomain.BaseDirectory;
+                string exeFolderPath = projectPath + "\\DLL";
+                var dllFiles = new DirectoryInfo(exeFolderPath).GetFiles("*.dll");
 
-                    if (type.IsClass && typeof(IShapeToStringConverter).IsAssignableFrom(type))
+                foreach (var dll in dllFiles)
+                {
+                    var assembly = Assembly.LoadFile(dll.FullName);
+                    var types = assembly.GetTypes();
+
+                    foreach (var type in types)
                     {
-                        var shapeConverter = Activator.CreateInstance(type) as IShapeToStringConverter;
-                        _converters.Add(shapeConverter.Name, shapeConverter);
+                        if (type.IsClass && typeof(IShape).IsAssignableFrom(type))
+                        {
+                            var shape = Activator.CreateInstance(type) as IShape;
+                            _prototypes.Add(shape.Name, shape);
+                            _shapeButtons.Add(shape);
+                        }
+
+                        if (type.IsClass && typeof(IShapeToStringConverter).IsAssignableFrom(type))
+                        {
+                            var shapeConverter = Activator.CreateInstance(type) as IShapeToStringConverter;
+                            _converters.Add(shapeConverter.Name, shapeConverter);
+                        }
                     }
                 }
+
+                // Create brush to draw
+                brush = new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } };
+
+                // Create orginal data
+                TitleName = "Untitled";
+                ShapeList.ItemsSource = _shapeButtons;
+                _selectedShapeName = _prototypes.First().Value.Name;
+                _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+                DataContext = this;
+                zoomInTimes = 0;
+                zoomOutTimes = 0;
+
+                // Create canvas
+                originalWidth = ActualWidth;
+                originalHeight = ActualHeight;
+
+                canvas.Width = originalWidth;
+                canvas.Height = originalHeight;
+                border.Width = canvas.Width;
+                border.Height = canvas.Height;
+
+                canvas.LayoutTransform = scaleTransform;
+                border.LayoutTransform = scaleTransform;
+
+                // Create color list
+                _colors.Add(new CustomColor() { ColorName = "Black", HexColor = new SolidColorBrush(Colors.Black) });
+                _colors.Add(new CustomColor() { ColorName = "Gray", HexColor = new SolidColorBrush(Colors.Gray) });
+                _colors.Add(new CustomColor() { ColorName = "Dark Red", HexColor = new SolidColorBrush(Colors.DarkRed) });
+                _colors.Add(new CustomColor() { ColorName = "Red", HexColor = new SolidColorBrush(Colors.Red) });
+                _colors.Add(new CustomColor() { ColorName = "Orange", HexColor = new SolidColorBrush(Colors.Orange) });
+                _colors.Add(new CustomColor() { ColorName = "Yellow", HexColor = new SolidColorBrush(Colors.Yellow) });
+                _colors.Add(new CustomColor() { ColorName = "Green", HexColor = new SolidColorBrush(Colors.Green) });
+                _colors.Add(new CustomColor() { ColorName = "Turquoise", HexColor = new SolidColorBrush(Colors.Turquoise) });
+                _colors.Add(new CustomColor() { ColorName = "Indigo", HexColor = new SolidColorBrush(Colors.Indigo) });
+                _colors.Add(new CustomColor() { ColorName = "Purple", HexColor = new SolidColorBrush(Colors.Purple) });
+                _colors.Add(new CustomColor() { ColorName = "White", HexColor = new SolidColorBrush(Colors.White) });
+                _colors.Add(new CustomColor() { ColorName = "Light Gray", HexColor = new SolidColorBrush(Colors.LightGray) });
+                _colors.Add(new CustomColor() { ColorName = "Brown", HexColor = new SolidColorBrush(Colors.Brown) });
+                _colors.Add(new CustomColor() { ColorName = "Light Pink", HexColor = new SolidColorBrush(Colors.LightPink) });
+                _colors.Add(new CustomColor() { ColorName = "Gold", HexColor = new SolidColorBrush(Colors.Gold) });
+                _colors.Add(new CustomColor() { ColorName = "Light Yellow", HexColor = new SolidColorBrush(Colors.LightYellow) });
+                _colors.Add(new CustomColor() { ColorName = "Lime", HexColor = new SolidColorBrush(Colors.Lime) });
+                _colors.Add(new CustomColor() { ColorName = "Medium Turquoise", HexColor = new SolidColorBrush(Colors.MediumTurquoise) });
+                _colors.Add(new CustomColor() { ColorName = "Light Slate Gray", HexColor = new SolidColorBrush(Colors.LightSlateGray) });
+                _colors.Add(new CustomColor() { ColorName = "Lavender", HexColor = new SolidColorBrush(Colors.Lavender) });
+
+                ColorList.ItemsSource = _colors;
+
+                // Create size button list
+                _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1 } });
+                _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 2, brushStyle = new DoubleCollection() { 1 } });
+                _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 3, brushStyle = new DoubleCollection() { 1 } });
+                _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 4, brushStyle = new DoubleCollection() { 1 } });
+
+                SizeList.ItemsSource = _btnBrushSizeList;
+
+                // Create style button list
+                _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } });
+                _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1 } });
+                _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 6 } });
+                _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 6, 1 } });
+                _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 4, 1, 1, 1, 1, 1 } });
+                _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 2, 4 } });
+
+                StyleList.ItemsSource = _btnBrushStyleList;
             }
-
-            // Create brush to draw
-            brush = new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } };
-
-            // Create orginal data
-            TitleName = "Untitled";
-            ShapeList.ItemsSource = _shapeButtons;
-            _selectedShapeName = _prototypes.First().Value.Name;
-            _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
-            DataContext = this;
-            zoomInTimes = 0;
-            zoomOutTimes = 0;
-
-            // Create canvas
-            originalWidth = ActualWidth;
-            originalHeight = ActualHeight;
-
-            canvas.Width = originalWidth;
-            canvas.Height = originalHeight;
-            border.Width = canvas.Width;
-            border.Height = canvas.Height;
-
-            canvas.LayoutTransform = scaleTransform;
-            border.LayoutTransform = scaleTransform;
-
-            // Create color list
-            _colors.Add(new CustomColor() { ColorName = "Black", HexColor = new SolidColorBrush(Colors.Black) });
-            _colors.Add(new CustomColor() { ColorName = "Gray", HexColor = new SolidColorBrush(Colors.Gray) });
-            _colors.Add(new CustomColor() { ColorName = "Dark Red", HexColor = new SolidColorBrush(Colors.DarkRed) });
-            _colors.Add(new CustomColor() { ColorName = "Red", HexColor = new SolidColorBrush(Colors.Red) });
-            _colors.Add(new CustomColor() { ColorName = "Orange", HexColor = new SolidColorBrush(Colors.Orange) });
-            _colors.Add(new CustomColor() { ColorName = "Yellow", HexColor = new SolidColorBrush(Colors.Yellow) });
-            _colors.Add(new CustomColor() { ColorName = "Green", HexColor = new SolidColorBrush(Colors.Green) });
-            _colors.Add(new CustomColor() { ColorName = "Turquoise", HexColor = new SolidColorBrush(Colors.Turquoise) });
-            _colors.Add(new CustomColor() { ColorName = "Indigo", HexColor = new SolidColorBrush(Colors.Indigo) });
-            _colors.Add(new CustomColor() { ColorName = "Purple", HexColor = new SolidColorBrush(Colors.Purple) });
-            _colors.Add(new CustomColor() { ColorName = "White", HexColor = new SolidColorBrush(Colors.White) });
-            _colors.Add(new CustomColor() { ColorName = "Light Gray", HexColor = new SolidColorBrush(Colors.LightGray) });
-            _colors.Add(new CustomColor() { ColorName = "Brown", HexColor = new SolidColorBrush(Colors.Brown) });
-            _colors.Add(new CustomColor() { ColorName = "Light Pink", HexColor = new SolidColorBrush(Colors.LightPink) });
-            _colors.Add(new CustomColor() { ColorName = "Gold", HexColor = new SolidColorBrush(Colors.Gold) });
-            _colors.Add(new CustomColor() { ColorName = "Light Yellow", HexColor = new SolidColorBrush(Colors.LightYellow) });
-            _colors.Add(new CustomColor() { ColorName = "Lime", HexColor = new SolidColorBrush(Colors.Lime) });
-            _colors.Add(new CustomColor() { ColorName = "Medium Turquoise", HexColor = new SolidColorBrush(Colors.MediumTurquoise) });
-            _colors.Add(new CustomColor() { ColorName = "Light Slate Gray", HexColor = new SolidColorBrush(Colors.LightSlateGray) });
-            _colors.Add(new CustomColor() { ColorName = "Lavender", HexColor = new SolidColorBrush(Colors.Lavender) });
-
-            ColorList.ItemsSource = _colors;
-
-            // Create size button list
-            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1 } });
-            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 2, brushStyle = new DoubleCollection() { 1 } });
-            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 3, brushStyle = new DoubleCollection() { 1 } });
-            _btnBrushSizeList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 4, brushStyle = new DoubleCollection() { 1 } });
-
-            SizeList.ItemsSource = _btnBrushSizeList;
-
-            // Create style button list
-            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } });
-            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1 } });
-            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 6 } });
-            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 6, 1 } });
-            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 4, 1, 1, 1, 1, 1 } });
-            _btnBrushStyleList.Add(new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 2, 4 } });
-
-            StyleList.ItemsSource = _btnBrushStyleList;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -248,25 +255,7 @@ namespace Paint
                 }
             }
         }
-
-        private void BtnPaste_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void BtnCut_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var i in _selectedIndexShapes)
-            {
-                Clipboard.SetDataObject(_shapes[i]);
-            }
-        }
-
-        private void BtnCopy_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
+        
         private void BtnShape_Click(object sender, RoutedEventArgs e)
         {
             _selectedShapeName = (sender as Fluent.Button).Tag as string;
@@ -383,20 +372,21 @@ namespace Paint
             }
         }
 
-        private void BtnOpen_Click(object sender, RoutedEventArgs e)
+        private void BtnOpenBinaryFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All files|*.png;*.jpeg;*.jpg;*.bmp;*.bin|All image files|*.png;*.jpeg;*.jpg;*.bmp|PNG|*.png|JPEG|*.jpg;*.jpeg|BMP|*.bmp|BIN|*.bin";
+            dialog.Filter = "All bin files|*.bin";
             dialog.Multiselect = false;
 
             if (dialog.ShowDialog() == true)
             {
                 string filename = dialog.FileName;
-                if (System.IO.Path.GetExtension(filename) == ".bin")
+
+                using (FileStream input = File.OpenRead(filename))
                 {
-                    using (FileStream input = File.OpenRead(filename))
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    try
                     {
-                        BinaryFormatter formatter = new BinaryFormatter();
                         List<string> read = formatter.Deserialize(input) as List<string>;
                         foreach (var item in read)
                         {
@@ -407,23 +397,37 @@ namespace Paint
                             canvas.Children.Add(shape.Draw());
                         }
                     }
+                    catch (SerializationException exception)
+                    {
+                        MessageBox.Show("Can not open this file.", "Paint", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                else
-                {
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(filename, UriKind.RelativeOrAbsolute);
-                    bitmap.EndInit();
+            }
+        }
 
-                    ImageBrush imageBrush = new ImageBrush();
-                    imageBrush.ImageSource = bitmap;
-                    canvas.Width = bitmap.Width;
-                    canvas.Height = bitmap.Height;
-                    border.Width = bitmap.Width;
-                    border.Height = bitmap.Height;
-                    canvas.Background = imageBrush;
-                    UpdateTitle(filename);
-                }
+        private void BtnOpenImageFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All image files|*.png;*.jpeg;*.jpg;*.bmp|PNG|*.png|JPEG|*.jpg;*.jpeg|BMP|*.bmp";
+            dialog.Multiselect = false;
+
+            if (dialog.ShowDialog() == true)
+            {
+                string filename = dialog.FileName;
+                
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(filename, UriKind.RelativeOrAbsolute);
+                bitmap.EndInit();
+
+                ImageBrush imageBrush = new ImageBrush();
+                imageBrush.ImageSource = bitmap;
+                canvas.Width = bitmap.Width;
+                canvas.Height = bitmap.Height;
+                border.Width = bitmap.Width;
+                border.Height = bitmap.Height;
+                canvas.Background = imageBrush;
+                UpdateTitle(filename);
             }
         }
 
@@ -459,17 +463,12 @@ namespace Paint
                 }
                 else
                 {
-                    if (isBrushColorChoose)
-                    {
-                        brush.brushColor = color;
-                        _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
-                        BtnBrushColor.Background = brush.brushColor;
-                    }
-                    else
-                    {
-                        BtnEraserColor.Background = color;
-                    }
+                    brush.brushColor = color;
+                    _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+                    BtnBrushColor.Background = brush.brushColor;
                 }
+
+                _colors.Add(new CustomColor() { ColorName = "", HexColor = color });
             }
         }
 
@@ -492,16 +491,9 @@ namespace Paint
             }
             else
             {
-                if (isBrushColorChoose)
-                {
-                    brush.brushColor = color;
-                    _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
-                    BtnBrushColor.Background = brush.brushColor;
-                }
-                else
-                {
-                    BtnEraserColor.Background = color;
-                }
+                brush.brushColor = color;
+                _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+                BtnBrushColor.Background = brush.brushColor;
             }
         }
 
@@ -619,14 +611,9 @@ namespace Paint
             }
         }
 
-        private void BtnBrushColor_Click(object sender, RoutedEventArgs e)
+        private void BtnInfo_Click(object sender, RoutedEventArgs e)
         {
-            isBrushColorChoose = true;
-        }
-
-        private void BtnEraserColor_Click(object sender, RoutedEventArgs e)
-        {
-            isBrushColorChoose = false;
+            MessageBox.Show("Developed by\nPhan Đặng Diễm Uyên - 19120426", "Paint", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void SetOriginalCanvasToSave()
@@ -670,6 +657,3 @@ namespace Paint
         }
     }
 }
-
-// TODO: hook to draw circle and square
-// TODO: create thumb to edit size of selected object
