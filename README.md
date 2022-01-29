@@ -12,6 +12,15 @@ Application provides many functions to draw graphic objects.
 | -------- | ------------ |
 | 19120426 | Phan Đặng Diễm Uyên |
 
+## ‼ Compile and run the project
+
+If the .exe file in the release folder is not working, please do following these steps:
+- Open **Source code** folder
+- Open **Paint** folder
+- Open **Paint.sln**
+- Choose **Paint** project
+- Run without debugging in **Release** mode
+
 ## 🔑 Core Requirements
 
 - [x] 1. Dynamically load all graphic objects that can be drawn from external DLL files.
@@ -21,7 +30,7 @@ Application provides many functions to draw graphic objects.
 - [x] 2. The user can choose which object to draw.
 - [x] 3. The user can see the preview of the object they want to draw.
 - [x] 4. The user can finish the drawing preview and their change becomes permanent with previously drawn objects.
-- [ ] 5. The list of drawn objects can be saved and loaded again for continuing later.
+- [x] 5. The list of drawn objects can be saved and loaded again for continuing later.
 - [x] 6. Save and load all drawn objects as an image in png format.
 
 ## ⭐ Improvements
@@ -31,7 +40,7 @@ Application provides many functions to draw graphic objects.
 - [x] 3. Adding image to the canvas
 - [ ] 4. Reduce flickering when drawing preview by using buffer to redraw all the canvas
 - [ ] 5. Adding Layers support
-- [ ] 6. Select a single element for editing again
+- [x] 6. Select a single element for editing again (delete, change the color, pen width, stroke type)
   - [ ] Transforming horizontally and vertically
   - [ ] Rotate the image
   - [ ] Drag & Drop
@@ -44,23 +53,18 @@ Application provides many functions to draw graphic objects.
 
 | Task name | Hours |
 | ----------- | --- |
-| Core Requirements - 1 |  |
-| Core Requirements - 2 |  |
-| Core Requirements - 3 |  |
-| Core Requirements - 4 |  |
-| Core Requirements - 5 |  |
-| Core Requirements - 6 |  |
-| Improvements - 1 |  |
-| Improvements - 2 |  |
-| Improvements - 3 |  |
-| Improvements - 4 |  |
-| Improvements - 5 |  |
-| Improvements - 6 |  |
-| Improvements - 7 |  |
-| Improvements - 8 |  |
-| Improvements - 9 |  |
-| Improvements - 10 |  |
-| **SUM** | **0** |
+| Core Requirements - 1 | 6 |
+| Core Requirements - 2 | 1 |
+| Core Requirements - 3 | 1 |
+| Core Requirements - 4 | 0.5 |
+| Core Requirements - 5 | 6 |
+| Core Requirements - 6 | 3 |
+| Improvements - 1 | 4 |
+| Improvements - 3 | 3 |
+| Improvements - 6 | 5 |
+| Improvements - 7 | 3 |
+| Improvements - 9 | 3 |
+| **SUM** | **35.5** |
 
 ## 💯 Expected Grade
 
