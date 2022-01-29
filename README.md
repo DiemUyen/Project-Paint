@@ -74,4 +74,4 @@ If the .exe file in the release folder is not working, please do following these
 
 ## 📹 Video demo
 
-URL: [Project Paint Demo]()
+URL: [Project Paint Demo](https://youtu.be/2xVVs8bU2eI)
