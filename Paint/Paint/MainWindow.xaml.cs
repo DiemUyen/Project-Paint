@@ -20,6 +20,7 @@ using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace Paint
 {
@@ -255,7 +256,36 @@ namespace Paint
                 }
             }
         }
-        
+
+        private void Border_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ContextMenu menu = this.FindResource("MenuShape") as ContextMenu;
+            menu.PlacementTarget = sender as UIElement;
+            menu.IsOpen = true;
+        }
+
+        private void BtnDeleteShape_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedIndexShapes.Count == 0)
+            {
+                MessageBox.Show("Please choose shape to delete.");
+                return;
+            }
+
+            var result = MessageBox.Show("Do you want to delete selected shapes?", "Paint", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                _selectedIndexShapes.Sort();
+                for (int index = _selectedIndexShapes.Count - 1; index >= 0; index--)
+                {
+                    canvas.Children.Remove(canvas.Children[index]);
+                    _shapes.RemoveAt(index);
+                }
+                _selectedIndexShapes.Clear();
+            }
+        }
+
         private void BtnShape_Click(object sender, RoutedEventArgs e)
         {
             _selectedShapeName = (sender as Fluent.Button).Tag as string;
@@ -365,7 +395,7 @@ namespace Paint
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 isSaved = false;
                 return false;
@@ -539,6 +569,11 @@ namespace Paint
             brush = new BrushTool() { brushColor = new SolidColorBrush(Colors.Black), brushWidth = 1, brushStyle = new DoubleCollection() { 1, 0 } };
             _selectedShapeName = _prototypes.First().Key;
             _preview = _prototypes[_selectedShapeName].Clone(brush.brushColor, brush.brushWidth, brush.brushStyle);
+
+            // Set the button undo, redo
+            BtnUndo.IsEnabled = false;
+            BtnRedo.IsEnabled = false;
+            _selectedIndexShapes.Clear();
         }
 
         private void BtnUndo_Click(object sender, RoutedEventArgs e)

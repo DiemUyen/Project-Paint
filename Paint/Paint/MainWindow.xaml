@@ -8,6 +8,12 @@
         mc:Ignorable="d"
         Title="{Binding Path=TitleName}" Height="450" Width="800" Loaded="Window_Loaded">
 
+    <Fluent:RibbonWindow.Resources>
+        <ContextMenu x:Key="MenuShape">
+            <MenuItem Header="Delete" Name="BtnDeleteShape" Click="BtnDeleteShape_Click"/>
+        </ContextMenu>
+    </Fluent:RibbonWindow.Resources>
+
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top">
             <Fluent:RibbonTabItem Header="Home">
@@ -152,7 +158,7 @@
         <ScrollViewer Name="ScrollBar" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Background="LightGray">
                 <Canvas Name="canvas" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Border Name="border" Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseUp="Border_MouseUp"
+                <Border Name="border" Background="Transparent" MouseLeftButtonDown="Border_MouseDown" MouseMove="Border_MouseMove" MouseLeftButtonUp="Border_MouseUp" MouseRightButtonDown="Border_MouseRightButtonDown"
                     HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1" BorderBrush="White"/>
             </Grid>
         </ScrollViewer>
